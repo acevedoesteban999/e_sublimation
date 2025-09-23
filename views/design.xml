@@ -19,6 +19,13 @@
         <field name="model">sublimation.design</field>
         <field name="arch" type="xml">
             <form string="Sublimation Design">
+                <header>
+                    <button string="Ver Producto Variante"
+                        type="object"
+                        name="action_open_product_product"
+                        invisible="not product_product_id"
+                    />
+                </header>
                 <sheet>
                     <field
                         name="image"
@@ -34,12 +41,13 @@
                     </div>
                     <group>
                         <group>
-                            <field name="product_tmpl_id" />
+                            <field name="product_tmpl_id" readonly="context.get('product_tmpl_id')" />
+                            <field name="price_extra" />
                         </group>
                         <group>
-                            <field name="attribute_line_ids" />
-                            <field name="product_product_ids" context="{'default_is_sublimation':True}"/>
+                            <field name="attch"></field>
                         </group>
+                    
                     </group>
                 </sheet>
             </form>
@@ -66,7 +74,6 @@
             <kanban class="o_kanban_mobile">
                 <field name="name"/>
                 <field name="image"/>
-                <field name="total_attribute_line"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
@@ -78,7 +85,7 @@
                                 <div class="o_kanban_tags"/>
                                 <div class="o_kanban_bottom_right">
                                     <span class="badge rounded-pill bg-primary">
-                                        <i class="fa fa-shopping-cart"/> Variantes: <field name="total_attribute_line"/>
+                                        <i class="fa fa-shopping-cart"/> Variantes:
                                     </span>
                                 </div>
                             </div>

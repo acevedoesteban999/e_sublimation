@@ -8,8 +8,9 @@
     'category': '',
     'depends': ['base', 'product'],
     "data": [
-        "views/sublimation_design_views.xml",
         "security/ir.model.access.csv",
+        "views/design.xml",
+        "views/product_template.xml",
         
         "views/menu.xml",
     ],

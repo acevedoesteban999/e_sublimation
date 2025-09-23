@@ -7,59 +7,40 @@ class SublimationDesign(models.Model):
     name = fields.Char(string='Nombre del diseño',required=True)
     image = fields.Binary(string='Imagen del diseño')
     product_tmpl_id = fields.Many2one('product.template', string='Producto base',required=True)
-    attribute_line_ids = fields.One2many('sublimation.attribute', 'design_id', string='Atributos')
-    total_attribute_line = fields.Integer(
-        string='Total de Variantes',
-        compute='_compute_total_attribute_line',
-        store=True,
-    )
-    product_product_ids = fields.One2many(
-        'product.product',
-        'sublimation_design_id',
-        string='Variantes generadas',
-    )
+    product_product_id = fields.Many2one('product.product',string='Variante generada')
+    
+    price_extra = fields.Monetary(string="Extra Price",currency_field='currency_id',default=0.0)
+    currency_id = fields.Many2one('res.currency',related='product_tmpl_id.currency_id')
+    attch = fields.Binary("Adjunto")
+    
 
-    @api.depends('attribute_line_ids')
-    def _compute_total_attribute_line(self):
-        for rec in self:
-            rec.total_attribute_line = len(rec.attribute_line_ids)
-
-
-    def _get_or_create_variant(self, value_ids):
-        """
-        :param value_ids: lista de IDs de `product.attribute.value`
-        :return: product.product record (creado o existente)
-        """
-        self.ensure_one()
-
-        # 1. Buscamos si ya existe la variante con esos valores
-        existing = self.product_tmpl_id.product_variant_ids.filtered(
-            lambda p: set(p.product_template_attribute_value_ids.product_attribute_value_id.ids) == set(value_ids)
-        )
-        if existing:
-            return existing[0]
-
-        # 2. Nos aseguramos de que la plantilla tenga esas líneas de atributo
-        for value in self.env['product.attribute.value'].browse(value_ids):
-            line = self.product_tmpl_id.attribute_line_ids.filtered(
-                lambda l: l.attribute_id == value.attribute_id
-            )
-            if not line:
-                self.product_tmpl_id.attribute_line_ids = [
-                    fields.Command.create({
-                        'attribute_id': value.attribute_id.id,
-                        'value_ids':      [(4, value.id)],
-                    })
-                ]
-            else:
-                if value.id not in line.value_ids.ids:
-                    line.value_ids = [(4, value.id)]
-
-        # 3. Creamos la variante
-        return self.env['product.product'].create({
-            'product_tmpl_id': self.product_tmpl_id.id,
-            'product_template_attribute_value_ids': [
-                fields.Command.create({'product_attribute_value_id': v}) for v in value_ids
-            ],
-            'sublimation_design_id': self.id,
+    def action_open_product_product(self):       
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Producto Variante',
+            'res_model': 'product.product',
+            'res_id': self.product_product_id.id,
+            'view_mode': 'form',
+            'view_id': self.env.ref('product.product_variant_easy_edit_view').id,
+            'target': 'current',
+        }
+    
+    def create(self, vals_list):
+        rec = super().create(vals_list)
+        product_product = self.env['product.product'].create({
+            'product_tmpl_id':rec.product_tmpl_id.id,
+            'price_extra':rec.price_extra,
         })
+        rec.product_product_id = product_product.id
+        return rec
+
+    def write(self, vals):
+        if 'price_extra' in vals:
+            self.product_product_id.price_extra = vals["price_extra"]
+        return super().write(vals)
+
+    def unlink(self):
+        for rec in self:
+            if rec.product_product_id:
+                rec.product_product_id.unlink()
+        super().unlink()

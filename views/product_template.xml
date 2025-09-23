@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="e_sublimation_inherit_product_template" model="ir.ui.view">
+        <field name="name">product.template.view.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='sale_ok']" position="after">
+                <field name="sublimation_ok" />
+                <label for="sublimation_ok"/>
+            </xpath>
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Sublimaciones" name="sublimations" invisible="not sublimation_ok">
+                    <field name="design_ids" mode="kanban" context="{'default_product_tmpl_id': id}">
+                        <kanban quick_create="true" create="true" edit="true">
+                            <field name="name"/>
+                            <field name="image"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div class="oe_kanban_card" style="width: 150px; text-align: center;">
+                                        <img t-att-src="kanban_image('sublimation.design', 'image', record.id.raw_value)" 
+                                            class="img-fluid" style="max-height: 100px;"/>
+                                        <div class="oe_kanban_details">
+                                            <strong><field name="name"/></strong>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
