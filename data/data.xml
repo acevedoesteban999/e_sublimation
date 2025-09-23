@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <record id="attr_sublimation" model="product.attribute">
+            <field name="name">Sublimación</field>
+            <field name="create_variant">no_variant</field>
+        </record>
+    </data>
+    
+</odoo>

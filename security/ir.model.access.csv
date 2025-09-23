@@ -1,6 +1,6 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_sublimation_design_manager,sublimation_design_manager,model_sublimation_design,base.group_system,1,1,1,1
+access_sublimation_sublimation_manager,sublimation_sublimation_manager,model_sublimation_sublimation,base.group_system,1,1,1,1
 
-access_sublimation_design_user,sublimation_design_manager,model_sublimation_design,base.group_user,1,0,0,0
+access_sublimation_sublimation_user,sublimation_sublimation_manager,model_sublimation_sublimation,base.group_user,1,0,0,0
 
-access_sublimation_design_public,sublimation_design_manager,model_sublimation_design,base.group_public,1,0,0,0
+access_sublimation_sublimation_public,sublimation_sublimation_manager,model_sublimation_sublimation,base.group_public,1,0,0,0

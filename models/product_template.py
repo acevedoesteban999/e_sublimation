@@ -4,19 +4,19 @@ class ProductProduct(models.Model):
     _inherit = 'product.template'
 
     sublimation_ok = fields.Boolean(string='Sublimable')
-    design_ids = fields.One2many('sublimation.design','product_tmpl_id','Diseños')
-    total_designs = fields.Integer(
+    sublimation_ids = fields.One2many('sublimation.sublimation','product_tmpl_id','Sublimaciones')
+    product_sublimation_count = fields.Integer(
         string='Total de Variantes',
         compute='_compute_total_attribute_line',
     )
 
-    @api.depends('total_designs')
+    @api.depends('product_sublimation_count')
     def _compute_total_attribute_line(self):
         for rec in self:
-            rec.total_designs = len(rec.total_designs)
+            rec.product_sublimation_count = len(rec.sublimation_ids)
 
     def unlink(self):
-        self.design_ids.unlink()
+        self.sublimation_ids.unlink()
         return super().unlink()
 
     

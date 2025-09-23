@@ -9,7 +9,10 @@
     'depends': ['base', 'product'],
     "data": [
         "security/ir.model.access.csv",
-        "views/design.xml",
+        
+        "data/data.xml",
+
+        "views/sublimation.xml",
         "views/product_template.xml",
         
         "views/menu.xml",

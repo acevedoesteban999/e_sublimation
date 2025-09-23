@@ -10,15 +10,15 @@
                 <label for="sublimation_ok"/>
             </xpath>
             <xpath expr="//page[@name='general_information']" position="after">
-                <page string="Sublimaciones" name="sublimations" invisible="not sublimation_ok">
-                    <field name="design_ids" mode="kanban" context="{'default_product_tmpl_id': id}">
+                <page string="Sublimaciones" name="sublimations" invisible="not sublimation_ok or not id">
+                    <field name="sublimation_ids" mode="kanban" context="{'default_product_tmpl_id': id}">
                         <kanban quick_create="true" create="true" edit="true">
                             <field name="name"/>
                             <field name="image"/>
                             <templates>
                                 <t t-name="kanban-box">
-                                    <div class="oe_kanban_card" style="width: 150px; text-align: center;">
-                                        <img t-att-src="kanban_image('sublimation.design', 'image', record.id.raw_value)" 
+                                    <div class="oe_kanban_card" style="width: 100px; text-align: center;">
+                                        <img t-att-src="kanban_image('sublimation.sublimation', 'image', record.id.raw_value)" 
                                             class="img-fluid" style="max-height: 100px;"/>
                                         <div class="oe_kanban_details">
                                             <strong><field name="name"/></strong>
@@ -30,6 +30,14 @@
                     </field>
                 </page>
             </xpath>
+
+            <button name="action_open_documents" position="before">
+                <button name="%(product.product_variant_action)d" type="action"
+                    icon="fa-sitemap" class="oe_stat_button"
+                    invisible="not product_sublimation_count">
+                    <field string="Sublimaciones" name="product_sublimation_count" widget="statinfo" />
+                </button>
+            </button>
         </field>
     </record>
 </odoo>
