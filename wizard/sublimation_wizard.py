@@ -15,6 +15,7 @@ class SublimationWizard(models.TransientModel):
         
         self.env['product.product'].create({
             'name': self.product_tmpl_sublimation_id.name + " " + self.name,
+            'sublimation_ok':True,
             'product_tmpl_sublimation_id': self.product_tmpl_sublimation_id.id,
             'default_code': f'SUB-{self.id}',
             'list_price': self.product_tmpl_sublimation_id.list_price + self.price_extra,

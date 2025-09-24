@@ -8,14 +8,14 @@ class ProductProduct(models.Model):
     def _compute_display_name(self):
         self.ensure_one()
         display_name = super()._compute_display_name()
-        if self.sublimation_ok:
+        if self.sublimation_ok and self.product_tmpl_sublimation_id:
             display_name = self.product_tmpl_sublimation_id.name + " " + self.name
         return display_name
 
 
     def open_product_template(self):
         self.ensure_one()
-        if self.sublimation_ok:
+        if self.sublimation_ok and self.product_tmpl_sublimation_id:
             return {
                 'type': 'ir.actions.act_window',
                 'res_model': 'product.template',

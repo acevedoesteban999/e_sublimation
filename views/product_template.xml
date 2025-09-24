@@ -11,23 +11,51 @@
             </xpath>
             <xpath expr="//page[@name='general_information']" position="after">
                 <page string="Sublimations" name="sublimations" invisible="not sublimation_ok or not id">
-                    <div class="oe_button_box" name="button_box">
+                    <div class="oe_button_box mb-2" name="button_box">
                         <button name="action_open_sublimation_wizard" type="object" class="btn btn-primary">
                             Create Sublimation
                         </button>
                     </div>
                     <field name="product_prod_sublimation_ids" mode="kanban" context="{'product_tmpl_sublimation_id': id,'default_sublimation_ok': sublimation_ok}">
-                        <kanban quick_create="true" create="true" edit="true">
-                            <field name="name"/>
-                            <field name="image_1920"/>
+                        <kanban quick_create="true" create="true" edit="true" limit="10">
+                            <field name="currency_id"/>
                             <templates>
-                                <t t-name="kanban-box">
-                                    <div class="oe_kanban_card" style="text-align: center;">
-                                        <img alt="Img" t-att-src="kanban_image('product.product', 'image_1920', record.id.raw_value)" 
-                                            class="img-fluid"/>
-                                        <div class="oe_kanban_details">
-                                            <strong><field name="name"/></strong>
+                                <t t-name="kanban-box" >
+                                    <div class="card h-100 border shadow-0">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="card-body d-flex flex-column justify-content-between ps-0 p-3">
+                                                    <div class="mb-2">
+                                                        <h6 class="mb-1 text-start">
+                                                            <span t-if="record.default_code.value" class="text-muted fw-normal">
+                                                                [<field name="default_code"/>]
+                                                            </span>
+                                                            <br/>
+                                                            <field name="name"/>
+                                                        </h6>
+                                                    </div>
+
+                                                    <div class="row g-2 text-muted small pt-3">
+                                                        <div class="col-12 text-start">
+                                                            <i class="fa fa-tag me-1" title="price"></i>
+                                                            <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card-img-rigth text-end p-1">
+                                                    <field
+                                                        name="image_1920"
+                                                        widget="image"
+                                                        alt="Product"
+                                                        options="{'img_class': 'img-fluid rounded', 'width': 25, 'height': 25}"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
+                                        
+                                        
                                     </div>
                                 </t>
                             </templates>
@@ -63,7 +91,7 @@
                     <t t-name="menu">
                         <div name="card_menu_view">
                             <div role="menuitem">
-                                <a class="h6" name="action_open_product_template" type="object"><small>Abrir Producto</small></a>
+                                <a class="h6" name="action_open_product_template" type="object"><small>Open Product</small></a>
                             </div>
                         </div>
                     </t>
@@ -96,7 +124,7 @@
                                         </div>
                                         <div class="col">
                                             <i class="fa fa-sitemap me-1" title="subl"></i>
-                                            <field name="product_sublimation_count"/> Subl.
+                                            <field name="product_sublimation_count"/>
                                         </div>
                                         <div class="col">
                                             <i class="fa fa-tag me-1" title="price"></i>
