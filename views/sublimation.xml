@@ -41,7 +41,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="product_tmpl_id" readonly="context.get('product_tmpl_id')" />
+                            <field name="product_tmpl_id" readonly="context.get('default_product_tmpl_id')" />
                             <field name="price_extra" />
                         </group>
                         <group>

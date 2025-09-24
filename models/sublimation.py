@@ -18,6 +18,7 @@ class SublimationSublimation(models.Model):
         'product.product',
         ondelete='cascade',
         string='Variante creada',
+        compute="_compute_product_product_id"
     )
     price_extra = fields.Monetary(default=0.0)
     currency_id = fields.Many2one(
@@ -26,26 +27,23 @@ class SublimationSublimation(models.Model):
     )
     file = fields.Binary()
 
+    def _compute_product_product_id(self):
+        for rec in self:
+            try:
+                rec.product_product_id = self.env['product.template'].filtered(lambda p: p.sublimation_id == rec.id)[0]
+            except:
+                rec.product_product_id = False
+                
     @api.model
     def create(self, vals):
         rec = super().create(vals)
-        if rec.product_tmpl_id.product_variant_count > 1:
-            variant = self.env['product.product'].create({
-                'product_tmpl_id': rec.product_tmpl_id.id,
-                'default_code': f'SUB-{rec.id}',
-                'lst_price': rec.product_tmpl_id.list_price + rec.price_extra,
-                'active': True,
-            })
-        else: 
-            variant = rec.product_product_id.product_variant_id
-            variant.update({
-                'product_tmpl_id': rec.product_tmpl_id.id,
-                'default_code': f'SUB-{rec.id}',
-                'lst_price': rec.product_tmpl_id.list_price + rec.price_extra,
-                'active': True,
-            })
-
-        rec.product_product_id = variant
+        
+        self.env['product.product'].create({
+            'name': rec.product_tmpl_id.name + " " + rec.name,
+            'sublimation_id': rec.id,
+            'default_code': f'SUB-{rec.id}',
+            'lst_price': rec.product_tmpl_id.list_price + rec.price_extra,
+        })
         return rec
 
     def write(self, vals):
@@ -69,5 +67,5 @@ class SublimationSublimation(models.Model):
             'res_model': 'product.product',
             'res_id': self.product_product_id.id,
             'view_mode': 'form',
-            'target': 'current',
+                'target': 'current',
         }

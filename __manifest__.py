@@ -6,11 +6,11 @@
     'author': 'acevedoesteban999@gmail.com',
     'website': '',
     'category': '',
-    'depends': ['base', 'product'],
+    'depends': ['base', 'product','stock'],
     "data": [
         "security/ir.model.access.csv",
         
-        "data/data.xml",
+        # "data/data.xml",
 
         "views/sublimation.xml",
         "views/product_template.xml",

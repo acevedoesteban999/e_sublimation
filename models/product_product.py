@@ -3,13 +3,12 @@ from odoo import fields,models,api
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    sublimation_id = fields.Many2one('sublimation.sublimation',compute="_compute_sublimation")
-
+    
     def _compute_display_name(self):
         self.ensure_one()
         display_name = super()._compute_display_name()
         if self.sublimation_ok:
-            display_name = self.product_tmpl_id.name + " " + self.sublimation_id.name
+            display_name = self.product_tmpl_sublimation_id.name + " " + self.sublimation_id.name
         return display_name
 
 
@@ -25,9 +24,7 @@ class ProductProduct(models.Model):
             }
         return super().open_product_template()
     
-    def _compute_sublimation(self):
-        for rec in self:
-            rec.sublimation_id = self.env['sublimation.sublimation'].search([('product_product_id','=',rec.id)])
+    
 
     
     @api.depends('product_template_attribute_value_ids')

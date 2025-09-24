@@ -17,9 +17,9 @@
                             <field name="image"/>
                             <templates>
                                 <t t-name="kanban-box">
-                                    <div class="oe_kanban_card" style="width: 100px; text-align: center;">
+                                    <div class="oe_kanban_card" style="text-align: center;">
                                         <img t-att-src="kanban_image('sublimation.sublimation', 'image', record.id.raw_value)" 
-                                            class="img-fluid" style="max-height: 100px;"/>
+                                            class="img-fluid"/>
                                         <div class="oe_kanban_details">
                                             <strong><field name="name"/></strong>
                                         </div>
@@ -39,5 +39,9 @@
                 </button>
             </button>
         </field>
+    </record>
+
+    <record id="stock.product_template_action_product" model="ir.actions.act_window">
+        <field name="domain" eval="[('sublimation_id', '=', False)]"/>
     </record>
 </odoo>
