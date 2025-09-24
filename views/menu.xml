@@ -3,5 +3,20 @@
     <menuitem id="menu_sublimation_root"
             name="Sublimaciones"
             action="action_product_template_sublimation"
-            sequence="10"/>
+            sequence="10">
+
+        <menuitem id="menu_sublimation_products_root"
+            name="Productos"
+            sequence="10">
+            <menuitem id="menu_sublimation_products"
+                name="Productos"
+                action="stock.product_template_action_product"
+                sequence="10"/>
+            <menuitem id="menu_sublimation_products_variant"
+                name="Variantes de Productos"
+                action="stock.stock_product_normal_action"
+                groups="product.group_product_variant"
+                sequence="20"/>
+        </menuitem>
+    </menuitem>
 </odoo>

@@ -33,7 +33,7 @@ class ProductProduct(models.Model):
             'res_model': 'product.product',
             'view_mode': 'list',
             'target': 'current',
-            'domain': [('id','in',self.sublimation_ids.product_product_id.ids)],
+            'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
             'view_id': self.env.ref('e_sublimation.product_product_view_tree').id,
         }
     
