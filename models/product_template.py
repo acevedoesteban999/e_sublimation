@@ -3,10 +3,10 @@ from odoo import fields,models,api
 class ProductProduct(models.Model):
     _inherit = 'product.template'
 
-    sublimation_ok = fields.Boolean(string='Sublimable')
+    sublimation_ok = fields.Boolean(string='Sublimación')
     sublimation_ids = fields.One2many('sublimation.sublimation','product_tmpl_id','Sublimaciones')
     product_sublimation_count = fields.Integer(
-        string='Total de Variantes',
+        string='Sublimaciones (Total)',
         compute='_compute_total_attribute_line',
     )
 
@@ -28,7 +28,6 @@ class ProductProduct(models.Model):
             rec.product_sublimation_count = len(rec.sublimation_ids)
     
     def action_open_product_product_sublimation(self):
-        
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'product.product',
@@ -37,6 +36,7 @@ class ProductProduct(models.Model):
             'domain': [('id','in',self.sublimation_ids.product_product_id.ids)],
             'view_id': self.env.ref('e_sublimation.product_product_view_tree').id,
         }
+    
     def action_open_product_template(self):
         return {
             'type': 'ir.actions.act_window',
@@ -47,15 +47,19 @@ class ProductProduct(models.Model):
             'view_id': self.env.ref('product.product_template_only_form_view').id,
         }
 
-    def action_open_sublimation_kanban(self):
-        
+    def action_open_product_product_sublimation_kanban(self):
         return {
+            'name': f'{self.name} - Subl.',
             'type': 'ir.actions.act_window',
             'res_model': 'product.product',
             'view_mode': 'kanban,list,form',
             'target': 'current',
-            'domain': [('id','in',self.sublimation_ids.product_product_id.ids)],
-            'views': [('kanban',self.env.ref('e_sublimation.product_product_view_tree').id),('list',self.env.ref('e_sublimation.product_product_view_tree').id)],
+            'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
+            'views': [
+                        (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
+                        (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
+                        (self.env.ref('product.product_normal_form_view').id,'form'),
+            ],
         }
 
     def unlink(self):

@@ -12,30 +12,59 @@
             </list>
         </field>
     </record>
-
-    <!-- <record id="product_product_view_kanban_sublimation" model="ir.ui.view">
+    
+    <record id="product_product_view_kanban_sublimation" model="ir.ui.view">
         <field name="name">product.product.kanban.sublimation</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile">
-                <field name="name"/>
-                <field name="image_1920"/>
+            <kanban sample="1">
+                <field name="currency_id"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
-                            <a type="object" action="action_open_sublimation_kanban">
-                                <div class="o_kanban_image_fill_left"
-                                    t-attf-style="background-image:url(#{kanban_image('product.product', 'image_1920', record.id.raw_value)})"/>
-                                <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title">
+                    <t t-name="kanban-box" >
+                        <div class="card h-100 border-0 shadow-0">
+                            <div class="card-img-top text-center p-2">
+                                <field
+                                    name="image_1920"
+                                    widget="image"
+                                    alt="Product"
+                                    options="{'img_class': 'img-fluid rounded', 'max_width': 192, 'max_height': 192}"
+                                />
+                            </div>
+                            
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <div class="mb-2">
+                                    <h2 class="mb-1 text-truncate text-center">
+                                        <span t-if="record.default_code.value" class="text-muted fw-normal">
+                                            [<field name="default_code"/>]
+                                        </span>
                                         <field name="name"/>
-                                    </strong>
+                                    </h2>
                                 </div>
-                            </a>
+
+                                <div class="row g-2 text-muted small">
+                                    <div class="col-12 text-end">
+                                        <i class="fa fa-tag me-1" title="price"></i>
+                                        <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </t>
                 </templates>
             </kanban>
         </field>
-    </record> -->
+    </record>
+
+    <record id="product_product_view_list_sublimation" model="ir.ui.view">
+        <field name="name">product.product.list.sublimation</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="default_code" />
+                <field name="list_price" />
+            </list>
+        </field>
+    </record>
+
 </odoo>

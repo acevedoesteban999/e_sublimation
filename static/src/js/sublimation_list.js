@@ -15,7 +15,7 @@ export class SublimationListController extends ListController {
     openRecord(record){
         const action = this.orm.call(
             "product.template",
-            "action_open_sublimation_kanban",
+            "action_open_product_product_sublimation_kanban",
             [record.resId],
         );
         if (action) {

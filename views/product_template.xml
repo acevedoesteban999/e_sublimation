@@ -62,7 +62,7 @@
                         </div>
                     </t>
                     <t t-name="card" >
-                        <a class="text-decoration-none text-reset h-100" name="action_open_sublimation_kanban" type="object">
+                        <a class="text-decoration-none text-reset h-100" name="action_open_product_product_sublimation_kanban" type="object">
                             <div class="card h-100 border-0 shadow-0">
                                 <div class="card-img-top text-center p-2">
                                     <field
@@ -83,20 +83,18 @@
                                         </h2>
                                     </div>
 
-                                    <div class="row g-2 text-muted small">
-                                        <div class="col-12 col-md-4">
-                                            <i class="fa fa-tag me-1" title="price"></i>
-                                            <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="row g-2 text-muted small text-center">
+                                        <div t-if="record.product_variant_count.value &gt; 1" class="col">
+                                            <i class="fa fa-layer-group me-1" title="var"></i>
+                                            <field name="product_variant_count"/> Variantes
                                         </div>
-                                        <div class="col-12 col-md-4">
-                                            <t t-if="record.product_variant_count.value &gt; 1">
-                                                <i class="fa fa-layer-group me-1" title="var"></i>
-                                                <field name="product_variant_count"/> Variantes
-                                            </t>
-                                        </div>
-                                        <div class="col-12 col-md-4">
+                                        <div class="col">
                                             <i class="fa fa-sitemap me-1" title="subl"></i>
                                             <field name="product_sublimation_count"/> Subl.
+                                        </div>
+                                        <div class="col">
+                                            <i class="fa fa-tag me-1" title="price"></i>
+                                            <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                         </div>
                                     </div>
                                 </div>
