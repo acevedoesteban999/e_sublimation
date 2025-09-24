@@ -52,10 +52,13 @@ class ProductProduct(models.Model):
             'view_mode': 'kanban,list,form',
             'target': 'current',
             'domain': [('id','in',self.product_prod_sublimation_ids.ids)],
+            'context': {'default_product_tmpl_sublimation_id': self.id},
             'views': [
                 (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
                 (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
-                (self.env.ref('product.product_normal_form_view').id,'form'),
+                # (self.env.ref('product.product_normal_form_view').id,'form'),
+                (self.env.ref('e_sublimation.sublimation_wizard_view_form').id,'form'),
+                
             ],
         }
 
