@@ -37,6 +37,15 @@ class ProductProduct(models.Model):
             'domain': [('id','in',self.sublimation_ids.product_product_id.ids)],
             'view_id': self.env.ref('e_sublimation.product_product_view_tree').id,
         }
+    def action_open_product_template(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'product.template',
+            'view_mode': 'form',
+            'target': 'current',
+            'res_id': self.id,
+            'view_id': self.env.ref('product.product_template_only_form_view').id,
+        }
 
     def action_open_sublimation_kanban(self):
         
