@@ -19,7 +19,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "e_sublimation/static/src/js/sublimation_list.js",
+            "e_sublimation/static/src/js/*.js",
         ],
     },
     

@@ -13,7 +13,7 @@ class SublimationWizard(models.TransientModel):
     def action_create_sublimation(self):
         self.ensure_one()
         
-        self.env['product.product'].create({
+        new_product = self.env['product.product'].create({
             'name': self.product_tmpl_sublimation_id.name + " " + self.name,
             'sublimation_ok':True,
             'product_tmpl_sublimation_id': self.product_tmpl_sublimation_id.id,
@@ -27,4 +27,7 @@ class SublimationWizard(models.TransientModel):
 
         return {
             'type': 'ir.actions.act_window_close',
+            'infos': {
+                'new_product_id': new_product.id,
+            },
         }

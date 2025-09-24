@@ -49,20 +49,22 @@ class ProductProduct(models.Model):
             'name': f'{self.name} - Subl.',
             'type': 'ir.actions.act_window',
             'res_model': 'product.product',
-            'view_mode': 'kanban,list,form',
+            'view_mode': 'kanban,list',
             'target': 'current',
             'domain': [('id','in',self.product_prod_sublimation_ids.ids)],
             'context': {'default_product_tmpl_sublimation_id': self.id},
             'views': [
                 (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
                 (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
-                # (self.env.ref('product.product_normal_form_view').id,'form'),
-                (self.env.ref('e_sublimation.sublimation_wizard_view_form').id,'form'),
+                (self.env.ref('product.product_normal_form_view').id,'form'),
+                
                 
             ],
         }
 
-    def action_open_sublimation_wizard(self):
+    @api.model
+    def action_open_sublimation_wizard(self,id_model = False):
+        model = self or self.env['product.template'].browse(id_model)
         return {
             'name': 'Create Sublimación',
             'type': 'ir.actions.act_window',
@@ -70,7 +72,7 @@ class ProductProduct(models.Model):
             'view_mode': 'form',
             'target': 'new',
             'views': [(self.env.ref('e_sublimation.sublimation_wizard_view_form').id,'form')],
-            'context': {'default_product_tmpl_sublimation_id': self.id}
+            'context': {'default_product_tmpl_sublimation_id': model.id}
         }
 
     def unlink(self):

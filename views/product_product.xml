@@ -17,7 +17,7 @@
         <field name="name">product.product.kanban.sublimation</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <kanban sample="1">
+            <kanban js_class="prod_sublimation_kanban">
                 <field name="currency_id"/>
                 <templates>
                     <t t-name="kanban-box" >
@@ -67,7 +67,7 @@
         <field name="name">product.product.list.sublimation</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <list>
+            <list js_class="prod_sublimation_list">
                 <field name="name" />
                 <field name="default_code" />
                 <field name="list_price" />
