@@ -10,11 +10,10 @@
     "data": [
         "security/ir.model.access.csv",
         
-        # "data/data.xml",
-
-        "views/sublimation.xml",
         "views/product_template.xml",
         "views/product_product.xml",
+
+        "wizard/sublimation_wizard.xml",
         
         "views/menu.xml",
     ],
