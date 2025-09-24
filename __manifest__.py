@@ -18,6 +18,11 @@
         
         "views/menu.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "e_sublimation/static/src/js/sublimation_list.js",
+        ],
+    },
     
     'application': True,
     'installable': True,
