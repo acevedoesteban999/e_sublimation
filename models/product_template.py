@@ -29,12 +29,16 @@ class ProductProduct(models.Model):
     
     def action_open_product_product_sublimation(self):
         return {
+            'name': f'{self.name} - Subl.',
             'type': 'ir.actions.act_window',
             'res_model': 'product.product',
-            'view_mode': 'list',
+            'view_mode': 'list,form',
             'target': 'current',
             'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
-            'view_id': self.env.ref('e_sublimation.product_product_view_tree').id,
+            'views': [
+                (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
+                (self.env.ref('product.product_normal_form_view').id,'form'),
+            ],
         }
     
     def action_open_product_template(self):
@@ -56,9 +60,9 @@ class ProductProduct(models.Model):
             'target': 'current',
             'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
             'views': [
-                        (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
-                        (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
-                        (self.env.ref('product.product_normal_form_view').id,'form'),
+                (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
+                (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
+                (self.env.ref('product.product_normal_form_view').id,'form'),
             ],
         }
 
