@@ -14,6 +14,7 @@
 
         "views/sublimation.xml",
         "views/product_template.xml",
+        "views/product_product.xml",
         
         "views/menu.xml",
     ],

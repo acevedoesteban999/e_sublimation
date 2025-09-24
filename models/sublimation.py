@@ -33,8 +33,7 @@ class SublimationSublimation(models.Model):
                 rec.product_product_id = self.env['product.template'].filtered(lambda p: p.sublimation_id == rec.id)[0]
             except:
                 rec.product_product_id = False
-                
-    @api.model
+
     def create(self, vals):
         rec = super().create(vals)
         

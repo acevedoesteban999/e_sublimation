@@ -2,6 +2,6 @@
 <odoo>
     <menuitem id="menu_sublimation_root"
             name="Sublimaciones"
-            action="action_sublimation_sublimation"
+            action="action_product_template_sublimation"
             sequence="10"/>
 </odoo>
