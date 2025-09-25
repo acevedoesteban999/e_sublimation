@@ -56,9 +56,7 @@ class ProductProduct(models.Model):
             'views': [
                 (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
                 (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
-                (self.env.ref('product.product_normal_form_view').id,'form'),
-                
-                
+                (self.env.ref('product.product_normal_form_view').id,'form'),  
             ],
         }
 

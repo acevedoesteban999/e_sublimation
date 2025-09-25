@@ -12,7 +12,7 @@ export class ProdSublimationListController extends ListController {
         this.action = useService("action");
     }
 
-    async  createRecord({ group } = {}) {
+    async createRecord({ group } = {}) {
         const action = await this.orm.call(
             "product.template",
             "action_open_sublimation_wizard",

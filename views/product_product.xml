@@ -82,7 +82,7 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//label[@for='sale_ok']" position="after">
-                <field name="sublimation_ok" invisible="not sublimation_ok"/>
+                <field name="sublimation_ok" readonly="1" invisible="not sublimation_ok"/>
                 <label for="sublimation_ok" invisible="not sublimation_ok"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_title')]" position="inside">
@@ -91,6 +91,13 @@
                     <button name="open_product_template" type="object" string="the product sublimation." class="oe_link oe_link_product ps-0 ms-1 mb-1"/>
                 </p>
             </xpath>
+            <!-- <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Sublimation">
+                    <group>
+                        <field name="file" widget="file"></field>
+                    </group>
+                </page>
+            </xpath> -->
         </field>
     </record>
 
