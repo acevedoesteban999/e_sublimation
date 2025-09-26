@@ -6,11 +6,17 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//label[@for='sale_ok']" position="after">
-                <field name="sublimation_ok" />
-                <label for="sublimation_ok"/>
+                <field name="sublimation_ok" invisible="product_tmpl_sublimation_id"/>
+                <label for="sublimation_ok" invisible="product_tmpl_sublimation_id"/>
+            </xpath>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="readonly">sublimation_ok and product_tmpl_sublimation_id</attribute>
+            </xpath>
+            <xpath expr="//label[@for='standard_price']" position="before">
+                <field name="sublimation_price_extra" invisible="not product_tmpl_sublimation_id"/>
             </xpath>
             <xpath expr="//page[@name='general_information']" position="after">
-                <page string="Sublimations" name="sublimations" invisible="not sublimation_ok or not id">
+                <page string="Sublimations" name="sublimations" invisible="not sublimation_ok or not id or product_tmpl_sublimation_id">
                     <div class="oe_button_box mb-2" name="button_box">
                         <button name="action_open_sublimation_wizard" type="object" class="btn btn-primary">
                             Create Sublimation
@@ -63,7 +69,7 @@
                         
                     </field>
                 </page>
-                <page string="Attachments" name="sublimation_attachments" invisible="not sublimation_ok or not id">
+                <page string="Attachments" name="sublimation_attachments" invisible="not sublimation_ok or not id or not product_tmpl_sublimation_id">
                     <div class="oe_button_box mb-2" name="button_box">
                         <button name="action_open_sublimation_attachment_wizard" type="object" class="btn btn-primary">
                             Add Attachments
@@ -74,7 +80,12 @@
                     </group>
                 </page>
             </xpath>
-
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <p invisible="not product_tmpl_sublimation_id">
+                    <span>This product are sublimation of </span>
+                    <button name="action_open_product_tmpl_sublimation_id" type="object" string="the product sublimation." class="oe_link oe_link_product ps-0 ms-1 mb-1"/>
+                </p>
+            </xpath>
             <button name="action_open_documents" position="before">
                 <button name="action_open_product_childs_sublimation" type="object"
                     icon="fa-sitemap" class="oe_stat_button"
@@ -191,8 +202,8 @@
     </record>
     
     <record id="product_childs_view_list_sublimation" model="ir.ui.view">
-        <field name="name">product.product.list.sublimation</field>
-        <field name="model">product.product</field>
+        <field name="name">product.template.list.sublimation</field>
+        <field name="model">product.template</field>
         <field name="arch" type="xml">
             <list js_class="prod_sublimation_list">
                 <field name="name" />
@@ -204,8 +215,8 @@
 
 
     <record id="product_childs_view_kanban_sublimation" model="ir.ui.view">
-        <field name="name">product.product.kanban.sublimation</field>
-        <field name="model">product.product</field>
+        <field name="name">product.template.kanban.sublimation</field>
+        <field name="model">product.template</field>
         <field name="arch" type="xml">
             <kanban js_class="prod_sublimation_kanban">
                 <field name="currency_id"/>

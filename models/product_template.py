@@ -19,6 +19,17 @@ class ProductProduct(models.Model):
         store=False
     )
     sublimation_price_extra = fields.Float(string='Sublimation Extra Price', default=0.0)
+    
+    list_price = fields.Float(compute="_compute_list_price",store=True)
+    
+    @api.depends('product_tmpl_sublimation_id.list_price','sublimation_price_extra')
+    def _compute_list_price(slef):
+        for rec in slef:
+            if rec.sublimation_ok and rec.product_tmpl_sublimation_id:
+                rec.list_price = rec.product_tmpl_sublimation_id.list_price + rec.sublimation_price_extra
+            else:
+                rec.list_price = rec.list_price or 1
+    
     def _compute_attachment_ids(self):
         for product in self:
             product.attachment_ids = self.env['ir.attachment'].search([
@@ -49,10 +60,19 @@ class ProductProduct(models.Model):
             'res_id': self.id,
             'view_id': self.env.ref('product.product_template_only_form_view').id,
         }
+    def action_open_product_tmpl_sublimation_id(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'product.template',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.product_tmpl_sublimation_id.id,
+            'view_id': self.env.ref('product.product_template_only_form_view').id,
+        }
 
     def action_open_product_childs_sublimation(self):
         return {
-            'name': f'{self.name} - Subl.',
+            'name': f'{self.name}',
             'type': 'ir.actions.act_window',
             'res_model': 'product.template',
             'view_mode': 'kanban,list,form',
@@ -62,7 +82,7 @@ class ProductProduct(models.Model):
             'views': [
                 (self.env.ref('e_sublimation.product_childs_view_kanban_sublimation').id,'kanban'),
                 (self.env.ref('e_sublimation.product_childs_view_list_sublimation').id,'list'),
-                (self.env.ref('product.product_normal_form_view').id,'form'),  
+                (self.env.ref('product.product_template_only_form_view').id,'form'),  
             ],
         }
 
