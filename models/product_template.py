@@ -3,29 +3,22 @@ from odoo import fields,models,api
 class ProductProduct(models.Model):
     _inherit = 'product.template'
 
-    sublimation_ok = fields.Boolean(string='Sublimación')
-    sublimation_ids = fields.One2many('sublimation.sublimation','product_tmpl_id','Sublimaciones')
+    sublimation_ok = fields.Boolean(string='Sublimation')
     product_sublimation_count = fields.Integer(
-        string='Sublimaciones (Total)',
+        string='Sublimations (Total)',
         compute='_compute_total_attribute_line',
     )
 
-    sublimation_id = fields.Many2one('sublimation.sublimation')
-    product_tmpl_sublimation_id = fields.Many2one('product.template', 'Product Template Sublimation',compute="_compute_product_tmpl_sublimation_id")
-    price_extra = fields.Monetary(related='sublimation_id.price_extra')
+    product_tmpl_sublimation_id = fields.Many2one('product.template', 'Product Template Sublimation')
+    product_prod_sublimation_ids = fields.One2many('product.product', 'product_tmpl_sublimation_id', string='Product Products Sublimation', readonly=True)
     
-    def _compute_product_tmpl_sublimation_id(self):
-        for rec in self:
-            rec.product_tmpl_sublimation_id = rec.sublimation_id.product_tmpl_id
-    
-
 
 
     @api.depends('product_sublimation_count')
     def _compute_total_attribute_line(self):
         self._create_variant_ids()
         for rec in self:
-            rec.product_sublimation_count = len(rec.sublimation_ids)
+            rec.product_sublimation_count = len(rec.product_prod_sublimation_ids)
     
     def action_open_product_product_sublimation(self):
         return {
@@ -34,7 +27,7 @@ class ProductProduct(models.Model):
             'res_model': 'product.product',
             'view_mode': 'list,form',
             'target': 'current',
-            'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
+            'domain': [('id','in',self.product_prod_sublimation_ids.ids)],
             'views': [
                 (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
                 (self.env.ref('product.product_normal_form_view').id,'form'),
@@ -56,17 +49,32 @@ class ProductProduct(models.Model):
             'name': f'{self.name} - Subl.',
             'type': 'ir.actions.act_window',
             'res_model': 'product.product',
-            'view_mode': 'kanban,list,form',
+            'view_mode': 'kanban,list',
             'target': 'current',
-            'domain': [('id','in',self.env['product.product'].search([('sublimation_id','in',self.sublimation_ids.ids)]).ids)],
+            'domain': [('id','in',self.product_prod_sublimation_ids.ids)],
+            'context': {'default_product_tmpl_sublimation_id': self.id},
             'views': [
                 (self.env.ref('e_sublimation.product_product_view_kanban_sublimation').id,'kanban'),
                 (self.env.ref('e_sublimation.product_product_view_list_sublimation').id,'list'),
-                (self.env.ref('product.product_normal_form_view').id,'form'),
+                (self.env.ref('product.product_normal_form_view').id,'form'),  
             ],
         }
 
+    @api.model
+    def action_open_sublimation_wizard(self,id_model = False):
+        model = self or self.env['product.template'].browse(id_model)
+        return {
+            'name': 'Create Sublimación',
+            'type': 'ir.actions.act_window',
+            'res_model': 'sublimation.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'views': [(self.env.ref('e_sublimation.sublimation_wizard_view_form').id,'form')],
+            'context': {'default_product_tmpl_sublimation_id': model.id}
+        }
+
     def unlink(self):
-        self.sublimation_ids.unlink()
+        if self.product_prod_sublimation_ids:
+            self.product_prod_sublimation_ids.unlink()
         return super().unlink()
 

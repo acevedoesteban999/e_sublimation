@@ -10,17 +10,17 @@
     "data": [
         "security/ir.model.access.csv",
         
-        # "data/data.xml",
-
-        "views/sublimation.xml",
         "views/product_template.xml",
         "views/product_product.xml",
+
+        "wizard/sublimation_wizard.xml",
+        "wizard/sublimation_attachment_wizard.xml",
         
         "views/menu.xml",
     ],
     "assets": {
         "web.assets_backend": [
-            "e_sublimation/static/src/js/sublimation_list.js",
+            "e_sublimation/static/src/js/*.js",
         ],
     },
     
