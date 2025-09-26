@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'E-Sublimation',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'summary': """ E-Sublimation Summary """,
     'author': 'acevedoesteban999@gmail.com',
     'website': '',
