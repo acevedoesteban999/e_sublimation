@@ -39,7 +39,7 @@ msgstr "<i class=\"fa fa-tag me-1\" title = \"precio\"/>"
 #. module: e_sublimation
 #: model_terms:ir.ui.view,arch_db:e_sublimation.product_template_view_kanban_sublimation
 msgid "<small>Open Product</small>"
-msgstr "<Small> Producto abierto </small>"
+msgstr "<Small> Abrir Producto </small>"
 
 #. module: e_sublimation
 #: model_terms:ir.ui.view,arch_db:e_sublimation.sublimations_inherit_product_product
