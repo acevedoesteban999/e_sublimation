@@ -91,13 +91,18 @@
                     <button name="open_product_template" type="object" string="the product sublimation." class="oe_link oe_link_product ps-0 ms-1 mb-1"/>
                 </p>
             </xpath>
-            <!-- <xpath expr="//page[@name='general_information']" position="after">
-                <page string="Sublimation">
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Sublimation Attachments" name="sublimation_attachments" invisible="not sublimation_ok">
+                    <div class="oe_button_box mb-2" name="button_box">
+                        <button name="action_open_sublimation_attachment_wizard" type="object" class="btn btn-primary">
+                            Add Attachments
+                        </button>
+                    </div>
                     <group>
-                        <field name="file" widget="file"></field>
+                        <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
                     </group>
                 </page>
-            </xpath> -->
+            </xpath>
         </field>
     </record>
 

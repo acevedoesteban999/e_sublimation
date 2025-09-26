@@ -20,16 +20,22 @@
                                 <field name="name" placeholder="Name..."/>
                             </h1>
                         </div>
-                        <group>
-                            <group>
-                                <field name="product_tmpl_sublimation_id" readonly="context.get('default_product_tmpl_sublimation_id')" />
-                                <field name="price_extra" />
-                            </group>
-                            <group>
-                                <field name="file"></field>
-                            </group>
-                        
-                        </group>
+                        <notebook>
+                            <page string="General Information" name="general_information">
+                                <group>
+                                    <field name="product_tmpl_sublimation_id" readonly="context.get('default_product_tmpl_sublimation_id')" />
+                                </group>
+                                <group>
+                                    <field name="price_extra" />
+                                </group>
+                                
+                            </page>
+                            <page name="attachments" string="Attachments">
+                                <group>
+                                    <field name="attachment_ids" widget="many2many_binary" string="Add Attachments" nolabel="1"></field>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                     <footer>
                         <button string="Create Sublimation" type="object" name="action_create_sublimation" class="btn-primary"/>
@@ -37,7 +43,7 @@
                     </footer>
                 </form>
             </field>
-        </record>    
+        </record>   
     </data>
     
 </odoo>

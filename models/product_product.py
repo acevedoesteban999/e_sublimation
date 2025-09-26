@@ -3,8 +3,20 @@ from odoo import fields,models,api
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    file = fields.Binary(string='File')
-    
+    attachment_ids = fields.Many2many(
+        'ir.attachment',
+        string="Attachments",
+        compute='_compute_attachment_ids',
+        store=False
+    )
+
+    def _compute_attachment_ids(self):
+        for product in self:
+            product.attachment_ids = self.env['ir.attachment'].search([
+                ('res_model', '=', 'product.product'),
+                ('res_id', '=', product.id)
+            ])
+
     def _compute_display_name(self):
         self.ensure_one()
         display_name = super()._compute_display_name()
@@ -25,6 +37,17 @@ class ProductProduct(models.Model):
             }
         return super().open_product_template()
     
+    def action_open_sublimation_attachment_wizard(self):
+        return {
+            'name': 'Create Sublimation Attachments',
+            'type': 'ir.actions.act_window',
+            'res_model': 'sublimation.attachment.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'views': [(self.env.ref('e_sublimation.sublimation_attachment_wizard_view_form').id,'form')],
+            'context': {'default_product_tmpl_sublimation_id': self.id}
+        }
+
     
 
     

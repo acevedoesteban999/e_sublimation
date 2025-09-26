@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <field name="product_prod_sublimation_ids" mode="kanban" context="{'product_tmpl_sublimation_id': id,'default_sublimation_ok': sublimation_ok}">
-                        <kanban quick_create="true" create="true" edit="true" limit="10">
+                        <kanban quick_create="true" create="true" edit="true" limit="20">
                             <field name="currency_id"/>
                             <templates>
                                 <t t-name="kanban-box" >
@@ -91,7 +91,9 @@
                     <t t-name="menu">
                         <div name="card_menu_view">
                             <div role="menuitem">
-                                <a class="h6" name="action_open_product_template" type="object"><small>Open Product</small></a>
+                                <div class="text-center">
+                                    <a class="h6 link" name="action_open_product_template" type="object"><small>Open Product</small></a>
+                                </div>
                             </div>
                         </div>
                     </t>

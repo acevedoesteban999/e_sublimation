@@ -14,6 +14,7 @@
         "views/product_product.xml",
 
         "wizard/sublimation_wizard.xml",
+        "wizard/sublimation_attachment_wizard.xml",
         
         "views/menu.xml",
     ],
