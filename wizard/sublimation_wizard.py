@@ -19,7 +19,6 @@ class SublimationWizard(models.TransientModel):
             'list_price': self.product_tmpl_sublimation_id.list_price + self.price_extra,
             'price_extra': self.price_extra,
             'image_1920': self.image_1920,
-            'file': self.file,
         })
 
         for att in self.attachment_ids:
@@ -28,7 +27,6 @@ class SublimationWizard(models.TransientModel):
                 'res_id': new_product.id,
             })
 
-        
 
         return {
             'type': 'ir.actions.act_window_close',
