@@ -55,6 +55,6 @@ class ProductProduct(models.Model):
     def _compute_combination_indices(self):
         for product in self:
             if product.sublimation_ok and self.product_tmpl_sublimation_id:
-                product.combination_indices = f"{product.name.lower().replace(" ",'_')}_{product.product_tmpl_sublimation_id.id}"
+                product.combination_indices = f"{product.name.lower().replace(' ','_')}_{product.product_tmpl_sublimation_id.id}"
             else:
                 product.combination_indices = product.product_template_attribute_value_ids._ids2str()
