@@ -44,11 +44,11 @@ class ProductProduct(models.Model):
             rec.product_sublimation_count = len(rec.product_childs_sublimation_ids)
     
     def _compute_display_name(self):
-        self.ensure_one()
-        display_name = super()._compute_display_name()
-        if self.sublimation_ok and self.product_tmpl_sublimation_id:
-            display_name = self.product_tmpl_sublimation_id.name + " " + self.name
-        return display_name
+        for rec in self:
+            if rec.sublimation_ok and rec.product_tmpl_sublimation_id:
+                rec.product_tmpl_sublimation_id.name + " " + rec.name
+            else:
+                super(ProductProduct,rec)._compute_display_name()
 
     
     def action_open_product_template(self):
