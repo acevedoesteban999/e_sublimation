@@ -154,8 +154,8 @@ msgid "Product Product Wizard"
 msgstr "Wizard de productos sublimados"
 
 #. module: e_sublimation
-#: model:ir.model.fields,field_description:e_sublimation.field_product_product__product_prod_sublimation_ids
-#: model:ir.model.fields,field_description:e_sublimation.field_product_template__product_prod_sublimation_ids
+#: model:ir.model.fields,field_description:e_sublimation.field_product_product__product_childs_sublimation_ids
+#: model:ir.model.fields,field_description:e_sublimation.field_product_template__product_childs_sublimation_ids
 msgid "Product Products Sublimation"
 msgstr "Productos Prod Sublimados"
 
