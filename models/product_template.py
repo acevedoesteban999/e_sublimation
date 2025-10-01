@@ -46,7 +46,7 @@ class ProductProduct(models.Model):
     def _compute_display_name(self):
         for rec in self:
             if rec.sublimation_ok and rec.product_tmpl_sublimation_id:
-                rec.product_tmpl_sublimation_id.name + " " + rec.name
+                rec.display_name = rec.product_tmpl_sublimation_id.name + " " + rec.name
             else:
                 super(ProductProduct,rec)._compute_display_name()
 
